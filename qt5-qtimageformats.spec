@@ -10,7 +10,7 @@ Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
 Version:	5.3.0
 Release:	1
-License:	LGPL v2.1 or GPL v3.0
+License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
 Group:		X11/Libraries
 Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
 # Source0-md5:	90c751ffe23c005eb411d1f081bf116d
@@ -131,6 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n Qt5Gui-imageformats
 %defattr(644,root,root,755)
+%doc LGPL_EXCEPTION.txt dist/changes-*
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqdds.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqicns.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqjp2.so
