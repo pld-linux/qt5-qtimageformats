@@ -1,5 +1,3 @@
-# TODO:
-# - cleanup
 #
 # Conditional build:
 %bcond_without	qch	# documentation in QCH format
@@ -10,17 +8,19 @@
 Summary:	The Qt5 Image Formats plugins
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
-Version:	5.2.0
-Release:	0.1
+Version:	5.3.0
+Release:	1
 License:	LGPL v2.1 or GPL v3.0
 Group:		X11/Libraries
-Source0:	http://download.qt-project.org/official_releases/qt/5.2/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	fe9898272b3952e3d97eacbaca484b55
+Source0:	http://download.qt-project.org/official_releases/qt/5.3/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	90c751ffe23c005eb411d1f081bf116d
 URL:		http://qt-project.org/
+BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
+BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
+BuildRequires:	jasper-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	qt5-qtbase-devel >= %{qtbase_ver}
-BuildRequires:	qt5-qttools-devel >= %{qttools_ver}
+BuildRequires:	libwebp-devel
 %if %{with qch}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
@@ -39,7 +39,7 @@ Qt is a cross-platform application and UI framework. Using Qt, you can
 write web-enabled applications once and deploy them across desktop,
 mobile and embedded systems without rewriting the source code.
 
-This package contains Qt5 Image Formats plugins.
+This package contains Qt5 Image Formats plugins for Qt5Gui library.
 
 %description -l pl.UTF-8
 Qt to wieloplatformowy szkielet aplikacji i interfejsów użytkownika.
@@ -47,15 +47,38 @@ Przy użyciu Qt można pisać aplikacje powiązane z WWW i wdrażać je w
 systemach biurkowych, przenośnych i wbudowanych bez przepisywania kodu
 źródłowego.
 
-Ten pakiet zawiera wtyczki Qt5 Image Formats.
+Ten pakiet zawiera wtyczki Qt5 Image Formats dla biblioteki Qt5Gui.
 
-%package devel
-Summary:	The Qt5 Image Formats - development files
-Group:		X11/Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+%package -n Qt5Gui-imageformats
+Summary:	Qt5 Image Formats plugins for Qt5Gui library
+Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats dla biblioteki Qt5Gui
+Group:		X11/Libraries
+Obsoletes:	qt5-qtimageformats
+Obsoletes:	qt5-qtimageformats-devel
 
-%description devel
-Qt5 Image Formats - development files.
+%description -n Qt5Gui-imageformats
+This package contains Qt5Gui Image Formats plugins that support the
+following formats:
+- DDS (Direct Draw Surface)
+- ICNS (Apple Icon Image)
+- JP2 (JPEG2000; Joint Photographic Experts Group 2000)
+- MNG (Multiple-image Network Graphics)
+- TGA (Truevision Graphics Adapter)
+- TIFF (Tagged Image File Format)
+- WBMP (Wireless Bitmap)
+- WEBP (WebP)
+
+%description -n Qt5Gui-imageformats -l pl.UTF-8
+Ten pakiet zawiera wtyczki Image Formats dla biblioteki Qt5Gui,
+obsługujące następujące formaty:
+- DDS (Direct Draw Surface)
+- ICNS (Apple Icon Image)
+- JP2 (JPEG2000; Joint Photographic Experts Group 2000)
+- MNG (Multiple-image Network Graphics)
+- TGA (Truevision Graphics Adapter)
+- TIFF (Tagged Image File Format)
+- WBMP (Wireless Bitmap)
+- WEBP (WebP)
 
 %package doc
 Summary:	Qt5 Image Formats documentation in HTML format
@@ -87,16 +110,6 @@ Qt5 Image Formats documentation in QCH format.
 %description doc-qch -l pl.UTF-8
 Dokumentacja do wtyczek Qt5 Image Formats w formacie QCH.
 
-%package examples
-Summary:	Qt5 Image Formats examples
-Group:		X11/Development/Libraries
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
-
-%description examples
-Qt5 Formats - examples.
-
 %prep
 %setup -q -n %{orgname}-opensource-src-%{version}
 
@@ -116,14 +129,31 @@ rm -rf $RPM_BUILD_ROOT
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files
+%files -n Qt5Gui-imageformats
 %defattr(644,root,root,755)
-%attr(755,root,root) %{qt5dir}/plugins/*
-
-%files devel
-%defattr(644,root,root,755)
-%{_libdir}/cmake/Qt5Gui/*.cmake
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqdds.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqicns.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqjp2.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqmng.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqtga.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqtiff.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqwbmp.so
+%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqwebp.so
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QDDSPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QJp2Plugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QMngPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QTgaPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QTiffPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake
+%{_libdir}/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake
 
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtimageformats
+
+%if %{with qch}
+%files doc-qch
+%defattr(644,root,root,755)
+%{_docdir}/qt5-doc/qtimageformats.qch
+%endif
