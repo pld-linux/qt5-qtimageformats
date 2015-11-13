@@ -8,19 +8,19 @@
 Summary:	The Qt5 Image Formats plugins
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
-Version:	5.4.2
+Version:	5.5.1
 Release:	1
 License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
 Group:		X11/Libraries
-Source0:	http://download.qt-project.org/official_releases/qt/5.4/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	b09f8aa0b04c96fddbdff623e7b4c17a
-URL:		http://qt-project.org/
+Source0:	http://download.qt.io/official_releases/qt/5.5/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	f935b629184200b155a3048ee67c81ab
+URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
 BuildRequires:	jasper-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libtiff-devel
-BuildRequires:	libwebp-devel
+BuildRequires:	libwebp-devel >= 0.4.3
 %if %{with qch}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
@@ -53,6 +53,7 @@ Ten pakiet zawiera wtyczki Qt5 Image Formats dla biblioteki Qt5Gui.
 Summary:	Qt5 Image Formats plugins for Qt5Gui library
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats dla biblioteki Qt5Gui
 Group:		X11/Libraries
+Requires:	libwebp >= 0.4.3
 Obsoletes:	qt5-qtimageformats
 Obsoletes:	qt5-qtimageformats-devel
 
