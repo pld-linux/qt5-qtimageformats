@@ -8,12 +8,12 @@
 Summary:	The Qt5 Image Formats plugins
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
-Version:	5.5.1
-Release:	4
+Version:	5.8.0
+Release:	1
 License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
 Group:		X11/Libraries
-Source0:	http://download.qt.io/official_releases/qt/5.5/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
-# Source0-md5:	f935b629184200b155a3048ee67c81ab
+Source0:	http://download.qt.io/official_releases/qt/5.8/%{version}/submodules/%{orgname}-opensource-src-%{version}.tar.xz
+# Source0-md5:	75e6580e5db2a16deffe072cd2dc60ed
 URL:		http://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
@@ -133,7 +133,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n Qt5Gui-imageformats
 %defattr(644,root,root,755)
 %doc LGPL_EXCEPTION.txt dist/changes-*
-%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqdds.so
+#%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqdds.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqicns.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqjp2.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqmng.so
@@ -141,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqtiff.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqwbmp.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqwebp.so
-%{_libdir}/cmake/Qt5Gui/Qt5Gui_QDDSPlugin.cmake
+#%{_libdir}/cmake/Qt5Gui/Qt5Gui_QDDSPlugin.cmake
 %{_libdir}/cmake/Qt5Gui/Qt5Gui_QICNSPlugin.cmake
 %{_libdir}/cmake/Qt5Gui/Qt5Gui_QJp2Plugin.cmake
 %{_libdir}/cmake/Qt5Gui/Qt5Gui_QMngPlugin.cmake
