@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	qch	# documentation in QCH format
+%bcond_without	doc	# Rocumentation
 
 %define		orgname		qtimageformats
 %define		qtbase_ver	%{version}
@@ -21,7 +21,7 @@ BuildRequires:	jasper-devel
 BuildRequires:	libmng-devel
 BuildRequires:	libtiff-devel
 BuildRequires:	libwebp-devel >= 0.4.3
-%if %{with qch}
+%if %{with doc}
 BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
 BuildRequires:	qt5-build >= %{qtbase_ver}
@@ -117,15 +117,17 @@ Dokumentacja do wtyczek Qt5 Image Formats w formacie QCH.
 %build
 qmake-qt5
 %{__make}
-%{__make} %{!?with_qch:html_}docs
+%{?with_doc:%{__make} docs}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
-%{__make} install_%{!?with_qch:html_}docs \
+%if %{with doc}
+%{__make} install_docs \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -150,11 +152,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/cmake/Qt5Gui/Qt5Gui_QWbmpPlugin.cmake
 %{_libdir}/cmake/Qt5Gui/Qt5Gui_QWebpPlugin.cmake
 
+%if %{with doc}
 %files doc
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtimageformats
 
-%if %{with qch}
 %files doc-qch
 %defattr(644,root,root,755)
 %{_docdir}/qt5-doc/qtimageformats.qch
