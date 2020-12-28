@@ -56,8 +56,8 @@ Group:		X11/Libraries
 Requires:	jasper-libs >= 1.900.1
 Requires:	libmng >= 1.0.9
 Requires:	libwebp >= 0.4.3
-Obsoletes:	qt5-qtimageformats
-Obsoletes:	qt5-qtimageformats-devel
+Obsoletes:	qt5-qtimageformats < 5.3.0
+Obsoletes:	qt5-qtimageformats-devel < 5.3.0
 
 %description -n Qt5Gui-imageformats
 This package contains Qt5Gui Image Formats plugins that support the
