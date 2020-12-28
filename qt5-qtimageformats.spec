@@ -10,15 +10,15 @@ Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
 Version:	5.15.2
 Release:	2
-License:	LGPL v2.1 with Digia Qt LGPL Exception v1.1 or GPL v3.0
+License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	http://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-src-%{version}.tar.xz
 # Source0-md5:	9a8b87ef1b02d1c719a68b31df3259ad
-URL:		http://www.qt.io/
+URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
-BuildRequires:	jasper-devel
-BuildRequires:	libmng-devel
+BuildRequires:	jasper-devel >= 1.900.1
+BuildRequires:	libmng-devel >= 1.0.9
 BuildRequires:	libtiff-devel
 BuildRequires:	libwebp-devel >= 0.4.3
 %if %{with doc}
@@ -26,7 +26,7 @@ BuildRequires:	qt5-assistant >= %{qttools_ver}
 %endif
 BuildRequires:	qt5-build >= %{qtbase_ver}
 BuildRequires:	qt5-qmake >= %{qtbase_ver}
-BuildRequires:	rpmbuild(macros) >= 1.654
+BuildRequires:	rpmbuild(macros) >= 1.752
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -53,6 +53,8 @@ Ten pakiet zawiera wtyczki Qt5 Image Formats dla biblioteki Qt5Gui.
 Summary:	Qt5 Image Formats plugins for Qt5Gui library
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats dla biblioteki Qt5Gui
 Group:		X11/Libraries
+Requires:	jasper-libs >= 1.900.1
+Requires:	libmng >= 1.0.9
 Requires:	libwebp >= 0.4.3
 Obsoletes:	qt5-qtimageformats
 Obsoletes:	qt5-qtimageformats-devel
@@ -60,7 +62,7 @@ Obsoletes:	qt5-qtimageformats-devel
 %description -n Qt5Gui-imageformats
 This package contains Qt5Gui Image Formats plugins that support the
 following formats:
-- DDS (Direct Draw Surface)
+%{?with_disabled:- DDS (Direct Draw Surface)}
 - ICNS (Apple Icon Image)
 - JP2 (JPEG2000; Joint Photographic Experts Group 2000)
 - MNG (Multiple-image Network Graphics)
@@ -72,7 +74,7 @@ following formats:
 %description -n Qt5Gui-imageformats -l pl.UTF-8
 Ten pakiet zawiera wtyczki Image Formats dla biblioteki Qt5Gui,
 obsługujące następujące formaty:
-- DDS (Direct Draw Surface)
+%{?with_disabled:- DDS (Direct Draw Surface)}
 - ICNS (Apple Icon Image)
 - JP2 (JPEG2000; Joint Photographic Experts Group 2000)
 - MNG (Multiple-image Network Graphics)
@@ -86,9 +88,7 @@ Summary:	Qt5 Image Formats documentation in HTML format
 Summary(pl.UTF-8):	Dokumentacja do wtyczek Qt5 Image Formats w formacie HTML
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc
 Qt5 Image Formats documentation in HTML format.
@@ -101,9 +101,7 @@ Summary:	Qt5 Image Formats documentation in QCH format
 Summary(pl.UTF-8):	Dokumentacja do wtyczek Qt5 Image Formats w formacie QCH
 Group:		Documentation
 Requires:	qt5-doc-common >= %{qtbase_ver}
-%if "%{_rpmversion}" >= "5"
-BuildArch:	noarch
-%endif
+%{?noarchpackage}
 
 %description doc-qch
 Qt5 Image Formats documentation in QCH format.
@@ -121,6 +119,7 @@ qmake-qt5
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
@@ -135,6 +134,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -n Qt5Gui-imageformats
 %defattr(644,root,root,755)
 %doc dist/changes-*
+# module disabled in src/plugins/imageformats/imageformats.pro
 #%attr(755,root,root) %{qt5dir}/plugins/imageformats/libqdds.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqicns.so
 %attr(755,root,root) %{qt5dir}/plugins/imageformats/libqjp2.so
