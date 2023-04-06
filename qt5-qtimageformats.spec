@@ -8,12 +8,12 @@
 Summary:	The Qt5 Image Formats plugins
 Summary(pl.UTF-8):	Wtyczki Qt5 Image Formats
 Name:		qt5-%{orgname}
-Version:	5.15.8
-Release:	2
+Version:	5.15.9
+Release:	1
 License:	LGPL v3 or GPL v2 or GPL v3 or commercial
 Group:		X11/Libraries
 Source0:	https://download.qt.io/official_releases/qt/5.15/%{version}/submodules/%{orgname}-everywhere-opensource-src-%{version}.tar.xz
-# Source0-md5:	9132b053968336f8c005a29034036432
+# Source0-md5:	6d9ec7762e2e857f749dda9cb7583a7a
 URL:		https://www.qt.io/
 BuildRequires:	Qt5Core-devel >= %{qtbase_ver}
 BuildRequires:	Qt5Gui-devel >= %{qtbase_ver}
